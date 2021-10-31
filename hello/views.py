@@ -2,7 +2,7 @@ import requests
 from dateutil.parser import parse
 from django.shortcuts import render
 from json.decoder import JSONDecodeError
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Greeting, Stuff
@@ -22,6 +22,9 @@ def db(request):
 
     return render(request, "db.html", {"greetings": greetings})
 
+def cert(request, cert):
+    html = open('hello/static/main.html', 'rb')
+    return FileResponse(html)
 
 def unrz(request, unrz):
     #Stuff.objects.get(unrz='9'+'020000000122401')
@@ -53,13 +56,12 @@ def unrz(request, unrz):
                 return HttpResponseNotFound('empty')           
     return JsonResponse(s.getJson())
 
-
     '''
 
 counter = 974506
 
 timer = setInterval(function () {
-    fetch('https://protected-peak-73444.herokuapp.com/unrz/0'+ (20000000000000 + counter))
+    fetch(window.location.origin+'/unrz/0'+ (20000000000000 + counter))
   .then((response) => {
     return response.json();
   })
@@ -74,48 +76,6 @@ timer = setInterval(function () {
 
 clearInterval(timer)
 
-function unrz(r,u) {
-    return (r + 100).toString().substring(1) + (u + 10000000000000).toString().substring(1)
-}
-
-ri = 0; u = 1287955;
-
-regs = [77,78,24,66,61,02,16,72,74,52,63,05,24,26,54,42,59,]
-
-function next_r() {
-  ri = ri + 1;
-  if (ri >= regs.length) {
-    next_n()
-  } else {
-    plan()
-  }
-}
-
-function next_n() {
-  ri = 0;
-  u = u + 1
-  plan()
-}
-
-function plan() {
-if (planned) setTimeout(function () {
-  fetch('https://protected-peak-73444.herokuapp.com/unrz/'+unrz(regs[ri],u))
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-    next_n()
-  })
-  .catch(function (err) {
-    next_r()
-  }); 
-},600)
-}
-
-planned = true
-
-plan()
 
 
     '''

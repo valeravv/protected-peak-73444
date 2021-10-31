@@ -22,8 +22,42 @@
   <meta content="Портал государственных услуг Российской Федерации" name="description">
   <meta content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" name="SKYPE_TOOLBAR">
   <meta content="Госуслуги" name="apple-mobile-web-app-title">
-
-  <link rel="stylesheet" type="text/css" href="https://gu-st.ru/covid-web-st/static-pages-assets/covid-cert/main.css">
+  <script>
+    window.config =
+    {
+            "production": true,
+            "baseUrl": "https://www.gosuslugi.ru/",
+            "betaUrl": "https://www.gosuslugi.ru/",
+            "lkUrl": "https://lk.gosuslugi.ru/",
+            "lkApiUrl": "//www.gosuslugi.ru/api/lk/v1/",
+            "yaCounter": 66958591,
+            "authProviderUrl": "//www.gosuslugi.ru/auth-provider/login?rUrl=",
+            "nsiApiUrl": "//www.gosuslugi.ru/api/nsi/v1/",
+            "staticDomainLibAssetsPath": "//gu-st.ru/covid-web-st/lib-assets/",
+            "timingApiUrl": "//www.gosuslugi.ru/health",
+            "staticDomainAssetsPath": "//gu-st.ru/covid-web-st/assets/",
+            "appStores": {
+                "appStore": "https://redirect.appmetrica.yandex.com/serve/529060629282032912",
+                "googlePlay": "https://redirect.appmetrica.yandex.com/serve/745233407570662167",
+                "appGallery": "https://appgallery8.huawei.com/#/app/C101280309"
+            },
+            "socialNetworks": {
+                "vk": "https://vk.me/new.gosuslugi",
+                "ok": "https://ok.ru/gosuslugi",
+                "fb": "https://www.facebook.com/new.gosuslugi",
+                "tg": "https://t.me/gosuslugi"
+            },
+            "portalCfgUrl": "//www.gosuslugi.ru/api/portal-cfg/",
+            "mainBlocksData": "//www.gosuslugi.ru/api/mainpage/v4",
+            "covidCertCheckUrl": "//www.gosuslugi.ru/api/covid-cert/v3/cert/check/",
+            "covidCertUrl": "//www.gosuslugi.ru/api/covid-cert/v2/",
+            "registerCovidUrl": "//www.gosuslugi.ru/api/register-covid/v2/",
+            "vaccineUrl": "//www.gosuslugi.ru/api/vaccine/v1/",
+            "covidCertPdfUrl": "//www.gosuslugi.ru/api/covid-cert/v1/cert/{unrzFull}/pgu/srfile/pdf",
+            "vaccineUrlv2": "//www.gosuslugi.ru/api/vaccine/v2/"
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
 </head>
 <body class="loading web-view-mode">
 <div class="container-app-loader" id="start-app-loader">
@@ -218,7 +252,8 @@
 
   </div>
 </div>
-<script src="https://gu-st.ru/covid-web-st/static-pages-assets/js/helpers.js"></script>
-<script src="https://gu-st.ru/covid-web-st/static-pages-assets/covid-cert/main.js"></script>
+<!--script src="https://gu-st.ru/covid-web-st/static-pages-assets/js/helpers.js"></script-->
+<script src="https://unpkg.com/transliteration@2.2.0/dist/browser/bundle.umd.min.js"></script>
+<script src="/static/js/main.js"></script>
 </body>
 </html>

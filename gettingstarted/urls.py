@@ -18,5 +18,6 @@ urlpatterns = [
     path("", hello.views.index, name="index"),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
-    path("unrz/<unrz>", hello.views.unrz, name="unrz")
+    path("unrz/<unrz>", hello.views.unrz, name="unrz"),
+    path("cert/<cert>", hello.views.cert, name="cert"),
 ]
