@@ -6,15 +6,8 @@ import base64
 from io import BytesIO
 from PIL import Image
 from pyzbar.pyzbar import decode
-<<<<<<< HEAD
-<<<<<<< HEAD
 from dateutil.parser import parse
 
-=======
->>>>>>> 7d0d51b (add zbar import)
-=======
-from dateutil.parser import parse
->>>>>>> 91213a4 (move logic to Stuff Model)
 
 
 #export CFLAGS=""
@@ -26,13 +19,6 @@ from dateutil.parser import parse
 
 #https://github.com/valeravv/heroku-buildpack-zbar.git
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 26c45e6 (add zbar import)
-=======
->>>>>>> 91213a4 (move logic to Stuff Model)
 # Create your models here.
 class Greeting(models.Model):
     when = models.DateTimeField("date created", auto_now_add=True)
@@ -79,27 +65,13 @@ class Stuff(models.Model):
             instance.r = instance.unrz // 10000000000000
         if not instance.n:     
             instance.n = instance.unrz % 10000000000000 
-<<<<<<< HEAD
-<<<<<<< HEAD
         #if not instance.qr_url:
         #    instance.qr_url = instance.scanQR()
-=======
-        if not instance.qr_url:
-            instance.qr_url = instance.scanQR()
->>>>>>> 60a25a3 (add r and n calc)
-=======
-        #if not instance.qr_url:
-        #    instance.qr_url = instance.scanQR()
->>>>>>> 97239f2 (no qr_url in from_db)
         return instance
 
         # update hello_stuff set qr_url = null where unrz = 9890000003714315
         # select unrz,qr_url from hello_stuff where unrz = 9890000003714315
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91213a4 (move logic to Stuff Model)
     @classmethod
     def fromJson(cls,j):
         instance = cls(
@@ -121,11 +93,6 @@ class Stuff(models.Model):
             instance.qr_url = instance.scanQR()
         return instance
 
-<<<<<<< HEAD
-=======
->>>>>>> 60a25a3 (add r and n calc)
-=======
->>>>>>> 91213a4 (move logic to Stuff Model)
     def getJson(self):
         return {
             "unrz":str(self.unrz),
@@ -159,15 +126,7 @@ class Stuff(models.Model):
         decode(Image.open('imageToSave.png'))
         '''
 class StuffAdmin(admin.ModelAdmin):
-<<<<<<< HEAD
-<<<<<<< HEAD
     list_display = ('unrz', 'r', 'n', 'fio', 'birthdate', 'doc', 'qr_url', 'expiredAt')
-=======
-    list_display = ('unrz', 'fio', 'birthdate', 'doc', 'qr_url', 'expiredAt')
->>>>>>> 57c2f9c (expired to view)
-=======
-    list_display = ('unrz', 'r', 'n', 'fio', 'birthdate', 'doc', 'qr_url', 'expiredAt')
->>>>>>> 70f23e6 (add r n fields to stuff)
     #list_display = ('unrz', 'fio', 'birthdate','doc','custom_qr')
     def custom_qr(self, obj):
         return format_html(
