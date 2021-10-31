@@ -3,10 +3,16 @@ function unrz(r,u) {
     return (r + 100).toString().substring(1) + (u + 10000000000000).toString().substring(1)
 }
 
-ri = 0; u = 1289034;
-regs = [77,78,24,66,61,02,16,72,74,52,63,05,24,26,54,42,59,14,65,28]
 
-r = regs[ri]
+reg2 = [77,78,24,66,61,02,16,72,74,52,63,05,24,26,54,42,59,14,65,28];
+
+reg1 = [];
+for ( var i = 1; i < 100; i++) reg1.push(i);
+
+regs = reg2;
+
+r = regs[ri];
+ri = 0; u = 1289034;
 
 function next_r() {
   ri = ri + 1;
