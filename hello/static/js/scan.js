@@ -11,8 +11,8 @@ for ( var i = 1; i < 100; i++) reg1.push(i);
 
 regs = reg2;
 
-r = regs[ri];
 ri = 0; u = 1289034;
+r = regs[ri];
 
 function next_r() {
   ri = ri + 1;
