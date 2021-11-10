@@ -4,6 +4,8 @@ from django.shortcuts import render
 from json.decoder import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management import call_command
+import gzip, shutil
 
 from .models import Greeting, Stuff
 
@@ -21,6 +23,18 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, "db.html", {"greetings": greetings})
+
+def dump(request):
+    output = open('data.json','w+') # Point stdout at a file for dumping data to.
+    call_command('dumpdata',format='json',indent=3,stdout=output)
+    output.close()
+    input = open('data.json','rb') 
+    output = gzip.GzipFile('data.json.gz','w+', compresslevel=9)
+    shutil.copyfileobj(input, output)
+    output.close()
+    input.close()
+    output = open('data.json.gz','rb')
+    return FileResponse(output)
 
 def cert(request, cert):
     html = open('hello/static/main.html', 'rb')
