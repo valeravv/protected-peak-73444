@@ -2,10 +2,11 @@ import requests
 from dateutil.parser import parse
 from django.shortcuts import render
 from json.decoder import JSONDecodeError
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, FileResponse
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, HttpResponseRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
-import gzip, shutil
+import gzip, shutil, tempfile
+from .forms import UploadFileForm
 
 from .models import Greeting, Stuff
 
@@ -35,6 +36,21 @@ def dump(request):
     input.close()
     output = open('data.json.gz','rb')
     return FileResponse(output)
+
+def dumpin(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = gzip.open(request.FILES['file'],'rb')
+            dir_temp = tempfile.TemporaryDirectory()
+            jdata = open(dir_temp.name + '/data.json','wb+')
+            shutil.copyfileobj(f,jdata)
+            print(jdata.name)
+            call_command('loaddata',jdata.name)
+            return HttpResponseRedirect('../')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})
 
 def cert(request, cert):
     html = open('hello/static/main.html', 'rb')

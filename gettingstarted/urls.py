@@ -21,4 +21,5 @@ urlpatterns = [
     path("unrz/<unrz>", hello.views.unrz, name="unrz"),
     path("cert/<cert>", hello.views.cert, name="cert"),
     path("dump/",hello.views.dump, name="dump"),
+    path("dumpin/",hello.views.dumpin, name="dumpin"),
 ]
