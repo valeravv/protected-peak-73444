@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, HttpResponseRedirect, FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
-import gzip, shutil, tempfile
+import gzip, shutil, os, tempfile
 from .forms import UploadFileForm
 
 from .models import Greeting, Stuff
@@ -25,16 +25,18 @@ def db(request):
 
 def dump(request):
     if request.user.is_authenticated:
-        output = open('data.json','w+') # Point stdout at a file for dumping data to.
-        call_command('dumpdata',format='json',indent=3,stdout=output)
-        output.close()
-        input = open('data.json','rb') 
-        output = gzip.GzipFile('data.json.gz','w+', compresslevel=9)
-        shutil.copyfileobj(input, output)
-        output.close()
-        input.close()
-        output = open('data.json.gz','rb')
-        return FileResponse(output)
+        datastr = tempfile.NamedTemporaryFile(mode='w+',delete=False)
+        call_command('dumpdata',format='json',indent=3,stdout=datastr)
+        datastr.close()
+        databytes = open(datastr.name,'rb')
+        zipfile = tempfile.NamedTemporaryFile(mode='w+b',suffix='.json.gz')
+        gzipped = gzip.GzipFile(mode='wb',fileobj=zipfile, compresslevel=9)
+        shutil.copyfileobj(databytes, gzipped)
+        databytes.close()
+        os.unlink(databytes.name)
+        gzipped.close()
+        zipfile.seek(0)
+        return FileResponse(zipfile, filename='data.json.gz')
     else:
         raise Http404()
 
