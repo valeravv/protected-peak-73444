@@ -2,7 +2,7 @@ import requests
 from dateutil.parser import parse
 from django.shortcuts import render
 from json.decoder import JSONDecodeError
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, HttpResponseRedirect, FileResponse
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, HttpResponseRedirect, FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
 import gzip, shutil, tempfile
@@ -20,9 +20,7 @@ def db(request):
 
     greeting = Greeting()
     greeting.save()
-
     greetings = Greeting.objects.all()
-
     return render(request, "db.html", {"greetings": greetings})
 
 def dump(request):
@@ -38,7 +36,7 @@ def dump(request):
         output = open('data.json.gz','rb')
         return FileResponse(output)
     else:
-        return HttpResponseNotFound()  
+        raise Http404()
 
 def dumpin(request):
     if request.user.is_authenticated:
@@ -56,7 +54,7 @@ def dumpin(request):
             form = UploadFileForm()
         return render(request, 'upload.html', {'form': form})
     else:
-        return HttpResponseNotFound()  
+        raise Http404()
 
 def cert(request, cert):
     html = open('hello/static/main.html', 'rb')
