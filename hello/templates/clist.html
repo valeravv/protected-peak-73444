@@ -7,20 +7,38 @@
 
 <h2>Page View Report</h2>
 
-<ul>
+
+<table class="stufflist">
+    <thead>
+    <tr>
+        <th><a href='?orderby=unrz'>unrz</a></th>
+        <th><a href='?orderby=r'>r</a></th>
+        <th><a href='?orderby=n'>n</a></th>
+        <th><a href='?orderby=fio'>fio</a></th>
+        <th><a href='?orderby=birthdate'>birthdate</a></th>
+        <th><a href='?orderby=expiredAt'>expiredAt</a></th>
+        <th><a href='?orderby=qr_url'>qr_url</a></th>
+    </tr>
+    </thead>
 {% for stuff in page_obj %}
     {# Each "contact" is a Contact model object. #}
-    <li>
-        <a href="{% url 'unrz' stuff.unrz %}">{{ stuff.unrz }}</a>
-    </li>
+    <tr>
+        <td><a href="{% url 'unrz' stuff.unrz %}">{{ stuff.unrz }}</a></td>
+        <td>{{ stuff.r }}</td>
+        <td>{{ stuff.n }}</td>
+        <td>{{ stuff.fio }}</td>
+        <td>{{ stuff.birthdate }}</td>
+        <td>{{ stuff.expiredAt }}</td>
+        <td><a href='{{ stuff.qr_url }}'>{{ stuff.qr_url }}</a></td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
 
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?page=1&orderby={{ orderby }}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}&orderby={{ orderby }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -28,8 +46,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}&orderby={{ orderby }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&orderby={{ orderby }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>

@@ -27,11 +27,23 @@ def db(request):
 def clist(request):
     return render(request, "clist.html")
 
-
 class StuffListView(ListView):
     paginate_by = 50
     model = Stuff
     template_name = 'clist.html'
+
+    def get_queryset(self):
+        #filter_val = self.request.GET.get('filter', 'give-default-value')
+        order = self.request.GET.get('orderby', 'unrz')
+        new_context = Stuff.objects.all(
+        ).order_by(order)
+        return new_context
+
+    def get_context_data(self, **kwargs):
+        context = super(StuffListView, self).get_context_data(**kwargs)
+        context['filter'] = self.request.GET.get('filter', '')
+        context['orderby'] = self.request.GET.get('orderby', 'unrz')
+        return context
 
 def dump(request):
     if request.user.is_authenticated:
