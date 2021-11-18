@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse, HttpResponsePermanentRedirect, HttpResponseRedirect, FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
+from django.views.generic import ListView
 import gzip, shutil, os, tempfile
 from .forms import UploadFileForm
 
@@ -22,6 +23,15 @@ def db(request):
     greeting.save()
     greetings = Greeting.objects.all()
     return render(request, "db.html", {"greetings": greetings})
+
+def clist(request):
+    return render(request, "clist.html")
+
+
+class StuffListView(ListView):
+    paginate_by = 50
+    model = Stuff
+    template_name = 'clist.html'
 
 def dump(request):
     if request.user.is_authenticated:
