@@ -26,31 +26,37 @@ def db(request):
     return render(request, "db.html", {"greetings": greetings})
 
 def dump(request):
-    output = open('data.json','w+') # Point stdout at a file for dumping data to.
-    call_command('dumpdata',format='json',indent=3,stdout=output)
-    output.close()
-    input = open('data.json','rb') 
-    output = gzip.GzipFile('data.json.gz','w+', compresslevel=9)
-    shutil.copyfileobj(input, output)
-    output.close()
-    input.close()
-    output = open('data.json.gz','rb')
-    return FileResponse(output)
+    if request.user.is_authenticated:
+        output = open('data.json','w+') # Point stdout at a file for dumping data to.
+        call_command('dumpdata',format='json',indent=3,stdout=output)
+        output.close()
+        input = open('data.json','rb') 
+        output = gzip.GzipFile('data.json.gz','w+', compresslevel=9)
+        shutil.copyfileobj(input, output)
+        output.close()
+        input.close()
+        output = open('data.json.gz','rb')
+        return FileResponse(output)
+    else:
+        return HttpResponseNotFound()  
 
 def dumpin(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = gzip.open(request.FILES['file'],'rb')
-            dir_temp = tempfile.TemporaryDirectory()
-            jdata = open(dir_temp.name + '/data.json','wb+')
-            shutil.copyfileobj(f,jdata)
-            print(jdata.name)
-            call_command('loaddata',jdata.name)
-            return HttpResponseRedirect('../')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():
+                f = gzip.open(request.FILES['file'],'rb')
+                dir_temp = tempfile.TemporaryDirectory()
+                jdata = open(dir_temp.name + '/data.json','wb+')
+                shutil.copyfileobj(f,jdata)
+                print(jdata.name)
+                call_command('loaddata',jdata.name)
+                return HttpResponseRedirect('../')
+        else:
+            form = UploadFileForm()
+        return render(request, 'upload.html', {'form': form})
     else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+        return HttpResponseNotFound()  
 
 def cert(request, cert):
     html = open('hello/static/main.html', 'rb')
