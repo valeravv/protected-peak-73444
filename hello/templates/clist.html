@@ -30,6 +30,9 @@
         <td>{{ stuff.birthdate }}</td>
         <td>{{ stuff.expiredAt }}</td>
         <td><a href='{{ stuff.qr_url }}'>{{ stuff.qr_url }}</a></td>
+        <td>
+            <img src="data:image/png;base64,{{ stuff.qr }}"></img>
+        </td>
     </tr>
 {% endfor %}
 </table>

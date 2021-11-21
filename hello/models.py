@@ -20,9 +20,6 @@ from dateutil.parser import parse
 #https://github.com/valeravv/heroku-buildpack-zbar.git
 
 # Create your models here.
-class Greeting(models.Model):
-    when = models.DateTimeField("date created", auto_now_add=True)
-
 
 # {"unrz":"9020000000122401", 
 #  "fio":"С********** А****** З********",

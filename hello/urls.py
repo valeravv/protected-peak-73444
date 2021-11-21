@@ -11,7 +11,11 @@ from . import views
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.StuffListView.as_view(extra_context={         
+              'title': 'Stuffs',
+              'site_title': 'My Site',
+              'site_header': 'Stuffs',
+        }), name="clist"),
     #path("db/", views.db, name="db"),
     #path("unrz/<unrz>", views.unrz, name="unrz"),
     #path("cert/<cert>", views.cert, name="cert"),
