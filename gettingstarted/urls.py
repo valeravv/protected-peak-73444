@@ -27,7 +27,11 @@ urlpatterns = [
         ),
     name='login'),
     #path('accounts/', include('django.contrib.auth.urls')),
-    path("list/", hello.views.StuffListView.as_view(), name="clist"),
+    path("", hello.views.StuffListView.as_view(extra_context={         
+              'title': 'Stuffs',
+              'site_title': 'My Site',
+              'site_header': 'Stuffs',
+        }), name="clist"),
     path("unrz/<unrz>", hello.views.unrz, name="unrz"),
     path("cert/<cert>", hello.views.cert, name="cert"),
     path('hello/', include('hello.urls')),

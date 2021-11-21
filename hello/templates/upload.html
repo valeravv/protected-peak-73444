@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "admin/base_site.html" %}
 {% load static %}
 
 {% block content %}
 
-<form action="/dumpin/" method="post" enctype="multipart/form-data">
+<form action="../dumpin/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{ form }}

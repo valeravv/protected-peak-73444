@@ -42,6 +42,7 @@ class StuffListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(StuffListView, self).get_context_data(**kwargs)
+        context['has_permission'] = self.request.user.is_authenticated
         context['filter'] = self.request.GET.get('filter', '')
         context['orderby'] = self.request.GET.get('orderby', 'unrz')
         return context
@@ -79,7 +80,12 @@ def dumpin(request):
                 return HttpResponseRedirect('../')
         else:
             form = UploadFileForm()
-        return render(request, 'upload.html', {'form': form})
+        return render(request, 'upload.html', {'form': form, 
+                'title': 'load dump',
+                'site_title': 'My Site',
+                'site_header': 'load dump',
+                'has_permission': request.user.is_authenticated  
+            })
     else:
         raise Http404()
 
