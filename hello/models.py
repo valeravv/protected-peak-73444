@@ -5,7 +5,6 @@ import datetime
 import base64
 from io import BytesIO
 from PIL import Image
-from pyzbar.pyzbar import decode
 from dateutil.parser import parse
 
 
@@ -108,6 +107,7 @@ class Stuff(models.Model):
         }
     
     def scanQR(self):
+        from pyzbar.pyzbar import decode
         b = base64.b64decode(self.qr)
         im_file = BytesIO(b)
         img = Image.open(im_file)
