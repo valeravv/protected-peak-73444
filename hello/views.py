@@ -8,6 +8,7 @@ from django.core.management import call_command
 from django.views.generic import ListView
 import gzip, shutil, os, tempfile
 from .forms import UploadFileForm
+from django.contrib.auth.decorators import login_required
 
 from .models import Greeting, Stuff
 
@@ -45,6 +46,7 @@ class StuffListView(ListView):
         context['orderby'] = self.request.GET.get('orderby', 'unrz')
         return context
 
+@login_required
 def dump(request):
     if request.user.is_authenticated:
         datastr = tempfile.NamedTemporaryFile(mode='w+',delete=False)
@@ -62,6 +64,7 @@ def dump(request):
     else:
         raise Http404()
 
+@login_required
 def dumpin(request):
     if request.user.is_authenticated:
         if request.method == 'POST':

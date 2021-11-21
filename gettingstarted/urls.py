@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.contrib.auth.views import LoginView
 
 from django.contrib import admin
 
@@ -16,6 +17,16 @@ import hello.views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('accounts/login/', 
+        LoginView.as_view(
+            template_name='admin/login.html',
+            extra_context={         
+              'title': 'Login',
+              'site_title': 'My Site',
+              'site_header': 'Login'}
+        ),
+    name='login'),
+    #path('accounts/', include('django.contrib.auth.urls')),
     path("list/", hello.views.StuffListView.as_view(), name="clist"),
     path("unrz/<unrz>", hello.views.unrz, name="unrz"),
     path("cert/<cert>", hello.views.cert, name="cert"),

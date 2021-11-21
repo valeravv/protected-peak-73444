@@ -12,9 +12,9 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("db/", views.db, name="db"),
-    path("unrz/<unrz>", views.unrz, name="unrz"),
-    path("cert/<cert>", views.cert, name="cert"),
+    #path("db/", views.db, name="db"),
+    #path("unrz/<unrz>", views.unrz, name="unrz"),
+    #path("cert/<cert>", views.cert, name="cert"),
     path("dump/",views.dump, name="dump"),
     path("dumpin/",views.dumpin, name="dumpin"),
 ]
