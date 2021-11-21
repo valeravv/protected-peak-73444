@@ -90,6 +90,9 @@ class Stuff(models.Model):
             instance.qr_url = instance.scanQR()
         return instance
 
+    def unrz_url(self):
+        return "/unrz/" + str(self.unrz)
+
     def getJson(self):
         return {
             "unrz":str(self.unrz),

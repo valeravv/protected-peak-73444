@@ -1,4 +1,5 @@
 django
+django-tables2
 gunicorn
 django-heroku
 python-dateutil

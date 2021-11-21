@@ -1,0 +1,15 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+{% endblock %}
+
+{% load static %}
+
+{% load render_table from django_tables2 %}
+
+{% block content %}
+
+{% render_table table %}
+
+{% endblock %}

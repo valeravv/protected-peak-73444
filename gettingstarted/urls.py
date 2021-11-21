@@ -32,6 +32,11 @@ urlpatterns = [
               'site_title': 'My Site',
               'site_header': 'Stuffs',
         }), name="clist"),
+    path("test",hello.views.StuffTableView.as_view(extra_context={         
+              'title': 'Stuffs',
+              'site_title': 'My Site',
+              'site_header': 'Stuffs',
+        }), name="test"),
     path("unrz/<unrz>", hello.views.unrz, name="unrz"),
     path("cert/<cert>", hello.views.cert, name="cert"),
     path('hello/', include('hello.urls')),

@@ -9,6 +9,8 @@ from django.views.generic import ListView
 import gzip, shutil, os, tempfile
 from .forms import UploadFileForm
 from django.contrib.auth.decorators import login_required
+import django_tables2 as tables
+from django_tables2 import SingleTableView
 
 from .models import Stuff
 
@@ -16,6 +18,19 @@ from .models import Stuff
 
 def clist(request):
     return render(request, "clist.html")
+
+class StuffTable(tables.Table):
+    qr_url = tables.URLColumn()
+    unrz_url = tables.URLColumn(Stuff.unrz_url)
+    class Meta:
+        model = Stuff
+        template_name = "django_tables2/bootstrap4.html"
+        fields = ("unrz", "r", "n", "fio", "birthdate", "expiredAt", "qr_url")
+
+class StuffTableView(SingleTableView):
+    paginate_by = 50
+    model = Stuff
+    table_class = StuffTable
 
 class StuffListView(ListView):
     paginate_by = 50
@@ -35,6 +50,8 @@ class StuffListView(ListView):
         context['filter'] = self.request.GET.get('filter', '')
         context['orderby'] = self.request.GET.get('orderby', 'unrz')
         return context
+
+
 
 @login_required
 def dump(request):
